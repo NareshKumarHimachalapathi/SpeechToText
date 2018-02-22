@@ -1,0 +1,118 @@
+﻿<!DOCTYPE html>
+<html ng-app="speechDemo">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Google Speech Demo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <script data-require="angular.js@1.0.x" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js" data-semver="1.0.8"></script>
+    <script src="jsSpeechFactory.js"></script>
+    <script src="Speech.js"></script>
+    <script src="app.js"></script>
+</head>
+
+<body ng-controller="MainCtrl" ng-cloak="">
+    <div class="container container-fluid">
+        <div class="search-box">
+            <input type="text" ng-model="quoteId" placeholder="Enter quote Id" ng-keypress="getQuoteInfo($event)" />
+            <i class="search-icon fa fa-search" ng-click="getQuoteInfo()"></i>
+        </div>
+
+        <div class="col-md-12">
+            <div class="quote-info">
+                <div class="row basic-info">
+                    <div class="col-lg-4" ng-class="{'text-as-link' :  QuoteDetails.QuoteId}">
+                        <span>View Summary</span>
+                        <i class="fa fa-chevron-up" ng-show="QuoteDetails.QuoteId && QuoteDetails.Open" ng-click="QuoteDetails.Open = !QuoteDetails.Open"></i>
+                        <i class="fa fa-chevron-down" ng-show="QuoteDetails.QuoteId && !QuoteDetails.Open" ng-click="QuoteDetails.Open = !QuoteDetails.Open"></i>
+                    </div>
+                    <div class="col-lg-3">
+                        <b>Quote Id:</b>
+                        <span>{{QuoteDetails.QuoteId}} - {{QuoteDetails.Type}}</span>
+                    </div>
+                    <div class="col-lg-3">
+                        <b>Status:</b>
+                        <span>{{QuoteDetails.Status}}</span>
+                    </div>
+                </div>
+                <div class="row more-details" ng-show="QuoteDetails.Open">
+                    <div class="col-lg-3">
+                        <div class="no-image-available">
+                            <span>No Image Available</span>
+                        </div>
+                    </div>
+                    <div class="col-lg-9">
+                        <div class="col-lg-12">
+                            <div class="col-lg-4">
+                                <b>Brand:</b>
+                                <div>{{QuoteDetails.Brand}}</div>
+                            </div>
+                            <div class="col-lg-4">
+                                <b>Department:</b>
+                                <div>{{QuoteDetails.Supplier.Id}}</div>
+                            </div>
+                            <div class="col-lg-4">
+                                <b>Buyer:</b>
+                                <div>{{QuoteDetails.Buyer}}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="col-lg-4">
+                                <b>Supplier Number:</b>
+                                <div>{{QuoteDetails.Supplier.Id}}</div>
+                            </div>
+                            <div class="col-lg-4">
+                                <b>Supplier Name:</b>
+                                <div>{{QuoteDetails.Supplier.Name}}</div>
+                            </div>
+                            <div class="col-lg-4">
+                                <b>Vendor stock number:</b>
+                                <div>{{QuoteDetails.VendorStockNumber}}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="col-lg-4">
+                                <b>Created By:</b>
+                                <div>{{QuoteDetails.CreatedBy}}</div>
+                            </div>
+                            <div class="col-lg-4">
+                                <b>Purchase company:</b>
+                                <div>{{QuoteDetails.PurchaseCompany}}</div>
+                            </div>
+                            <div class="col-lg-4">
+                                <b>Last Changed By:</b>
+                                <div>{{QuoteDetails.LastChangedBy}}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="col-lg-4">
+                                <b>Created Date:</b>
+                                <div>{{QuoteDetails.CreatedAt}}</div>
+                            </div>
+                            <div class="col-lg-4">
+                                <b>Copied from Quote:</b>
+                                <div>{{QuoteDetails.CopiedQuote}}</div>
+                            </div>
+                            <div class="col-lg-4">
+                                <b>Last Changed Timestamp:</b>
+                                <div>{{QuoteDetails.LastChangedAt}}</div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <js-speech ng-model="speech"></js-speech>
+                        </div>
+                        <div class="col-lg-12 button-group">
+                            <button ng-click="submitQuote()">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>{{quoteInfo|json}}</div>
+    </div>
+    <!-- /.container -->
+</body>
+
+</html>
